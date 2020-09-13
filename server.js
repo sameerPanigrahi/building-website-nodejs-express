@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const routes = require('./routes');
 
 const app = express();
 
@@ -9,15 +10,9 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, './views'));
 
 app.use(express.static(path.join(__dirname, './resources/static')));
-
-app.get('/', (request, response) => {
-  response.render('pages/index', { pageTitle: 'Welcome Admin' });
-});
-
-app.get('/speaker', (request, response) => {
-  response.sendFile(path.join(__dirname, './resources/static/speakers.html'));
-});
+app.use('/', routes());
 
 app.listen(port, () => {
+  // eslint-disable-next-line no-console
   console.log(`listening on ${port}`);
 });
