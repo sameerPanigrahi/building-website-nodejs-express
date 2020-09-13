@@ -1,8 +1,10 @@
 const feedbackRouter = require('express').Router();
 
-module.exports = () => {
-  feedbackRouter.get('/', (request, response) => {
-    response.send('feedback list');
+module.exports = (params) => {
+  const { feedbackService } = params;
+  feedbackRouter.get('/', async (request, response) => {
+    const feedback = await feedbackService.getList();
+    response.json(feedback);
   });
 
   feedbackRouter.post('/', (request, response) => {
